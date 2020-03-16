@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+// import Report from './Report'
 import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css';
 import { TimePickerComponent } from '@syncfusion/ej2-react-calendars';
@@ -16,8 +17,8 @@ class Activities extends Component {
         activity: "",
         startingTime: "",
         endingTime: "00:00 AM",
-        addActivity:false
-
+        addActivity:false,
+        temp:0
     }
 
 
@@ -38,7 +39,7 @@ class Activities extends Component {
     handleActivities = () => {
 
         this.setState({addActivity:true})
-        let temp = null;
+      
         console.log(this.state.userDetails)
 
         if (localStorage.getItem('document') != null) {
@@ -51,18 +52,19 @@ class Activities extends Component {
             for (let i = 0; i < data.length; i++) {
                 if (data[i].password === this.props.password && data[i].userName === this.props.name) {
                     flag = 1;
-                    temp = i;
+                    this.setState({temp:i})
                     break;
                 }
                 else {
                     flag = 0;
-                    temp = data.length
+                    //temp = data.length
+                    this.setState({temp: data.length})
                 }
             }
         }
         else {
             flag = 0;
-            temp = 0;
+            
         }
         if (flag === 1) {
             let newArray = data;
@@ -72,13 +74,13 @@ class Activities extends Component {
                 activity: this.state.activity
 
             }
-            newArray[temp].activities.push(obj);
+            newArray[this.state.temp].activities.push(obj);
             this.setState({ userDetails: newArray })
-            localStorage.setItem('document', JSON.stringify(this.state.userDetails))
+            localStorage.setItem('document', JSON.stringify(newArray))
 
         }
         else {
-            let newArray = this.state.userDetails;
+            let newArray = data;
             const obj = {
                 userName: this.props.name,
                 password: this.props.password,
@@ -91,14 +93,14 @@ class Activities extends Component {
             }
             newArray.push(obj);
             this.setState({ userDetails: newArray })
-            localStorage.setItem('document', JSON.stringify(this.state.userDetails))
+            localStorage.setItem('document', JSON.stringify(newArray))
 
         }
         
     }
     render() {
 
-
+       let data = JSON.parse(localStorage.getItem('document'))
         return (
             <div>
                 <h1>Activities</h1>
@@ -143,7 +145,17 @@ class Activities extends Component {
                 <button onClick={this.handleActivities}>submit</button><br></br><br></br>
 
 
-            {this.state.addActivity?<ActivityTable userDetails={this.state.userDetails} ></ActivityTable>:null}
+            {this.state.addActivity?<table>
+                    <th>activity</th>
+                    <th>duration</th>
+                    <th>date</th>
+                    {
+                        data[this.state.temp].activities.map((activity) => {
+                            return (<ActivityTable obj={activity}></ActivityTable>)
+                        }
+                        )
+                    }
+                </table>:null}
 
 
 
@@ -153,3 +165,4 @@ class Activities extends Component {
 
 }
 export default Activities;
+

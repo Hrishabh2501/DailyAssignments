@@ -23,6 +23,7 @@ class SignUp extends React.Component {
         if(this.state.uname && this.state.password !== '')
         {
         this.setState({submit:true})
+        localStorage.setItem('documet',JSON.stringify(this.state))
         }
         else{
             alert('ENTER CREDENTIALS')
