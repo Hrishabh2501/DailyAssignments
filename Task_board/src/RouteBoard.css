@@ -1,0 +1,15 @@
+.stages{
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: red;
+    padding-bottom: 5mm;
+    width: 10cm;
+   
+}
+.uprStages{
+flex-direction: column;
+}
