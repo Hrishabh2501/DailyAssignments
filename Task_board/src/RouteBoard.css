@@ -4,12 +4,58 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
+    font-size: 5mm;
     color: red;
     padding-bottom: 5mm;
     width: 10cm;
+    float: left;
+    scroll-behavior: auto;
+    /* overflow-y: auto; */
+    /* overflow: auto; */
+    /* white-space: nowrap; */
    
 }
+
+
+div.uprStages {
+    background-color: #000;
+    overflow: auto;
+    /* white-space: nowrap; */
+  }
+  
+  /* div.uprStages a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+  } */
+  
+  /* div.uprStages a:hover {
+    background-color: #777;
+  } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .uprStages{
 flex-direction: column;
+}
+div.hr-line {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 100%;
+    border-bottom: 1px solid #7A7A7A;
 }

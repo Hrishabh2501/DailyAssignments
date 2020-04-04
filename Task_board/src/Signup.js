@@ -1,71 +1,73 @@
 import React from 'react';
 import Board from './Boards'
-import Sidebar from './sidebar';
+import { ToastsContainer, ToastsStore } from 'react-toasts';
+
+// import Sidebar from './sidebar';
 
 class SignUp extends React.Component {
-    state = {
+    constructor(props)
+    { 
+        super(props)
+        this.state = {
         uname: '',
-        password: '',
+        pass: '',
         submit: false,
         toggle: true
     }
-
+    this.handleChange=this.handleChange.bind(this)
+    this.handlePassword=this.handlePassword.bind(this)
+    this.handleSubmit=this.handleSubmit.bind(this)
+    this.handleLogout=this.handleLogout.bind(this)
+}
+  
     handleChange = (e) => {
         this.setState({ uname: e.target.value })
     }
     handlePassword = (e) => {
-        this.setState({ password: e.target.value })
+        this.setState({ pass: e.target.value })
     }
     handleSubmit = () => {
 
-        if (localStorage.getItem(this.state.uname)) {
-            const localStorageData = JSON.parse(localStorage.getItem(this.state.uname))
-            if (localStorageData.password === this.state.password) {
-                alert('SUCCESSFUL')
-                this.setState({ toggle: false, submit: true })
-
+        if (this.state.uname.length > 0) {
+            if (localStorage.getItem(this.state.uname)) {
+                const localStorageData = JSON.parse(localStorage.getItem(this.state.uname))
+                if (localStorageData.password === this.state.pass) {
+                    ToastsStore.success("WELCOME "+this.state.uname+".....!!!!")
+                    // alert('"WELCOME "+this.state.uname+".....!!!!"')
+                    this.setState({ toggle: false, submit: true })
+                }
+                else {
+                    // ToastsStore.error("WRONG PASSWORD....SORRY!!!!!!")
+                    alert('WRONG PASSWORD....SORRY!!!!!!')
+                }
             }
             else {
-                alert('WRONG PASSWORD')
+                let obj = {
+                    password: this.state.pass,
+                    boards: []
 
+                }
+                localStorage.setItem(this.state.uname, JSON.stringify(obj))
+
+
+                alert(" WELCOME " + this.state.uname + ".....!!!!")
+                // ToastsStore.success("WELCOME "+this.state.uname+".....!!!!")
+
+                this.setState({ toggle: false, submit: true })
             }
+
         }
         else {
-            let obj = {
-                password: this.state.password,
-                boards: [
-                    {
-                        boardName: '',
-                        stages: [
-                            {
-                                stageName: '',
-                                tasks: [
-                                    {
-                                        title: '',
-                                        desc: '',
-                                        startTime: '',
-                                        endTime: ''
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-
-            localStorage.setItem(this.state.uname, JSON.stringify(obj))
-            alert('SUCCESSFUL')
-            this.setState({ toggle: false, submit: true })
-
+            //  ToastsStore.error("WITHOUT USERNAME....DOOR LOCKED!!!!!!")
+            alert("WITHOUT USERNAME....DOOR LOCKED!!!!!!")
         }
-
-
     }
     handleLogout = () => {
 
         this.setState({ submit: false })
         this.setState({ toggle: true })
-        alert(this.state.uname + " logged out successfully")
+        alert(" SEE YOU SOON " + this.state.uname + " TATA!!!!!:-)")
+        // ToastsStore.success(" SEE YOU SOON"+this.state.uname+"TATA!!!!!:-)")
 
     }
     render() {
@@ -99,7 +101,9 @@ class SignUp extends React.Component {
 
                                         <div className="form-group">
                                             <button onClick={this.handleSubmit} className="btn float-right login_btn">signin</button>
+                                            <ToastsContainer store={ToastsStore} />
                                         </div>
+                                        
 
                                     </div>
                                 </div>

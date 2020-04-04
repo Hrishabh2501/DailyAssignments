@@ -1,9 +1,8 @@
 import React from 'react'
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
+import {  Link, Route, Switch } from 'react-router-dom'
 import BoardRoute from './RouteBoard'
-import DatePicker from 'react-datepicker'
+import './Board.css'
 
-import SignUp from './Signup'
 // import Dropdown from 'react-dropdown';
 // import 'react-dropdown/style.css';
 
@@ -34,23 +33,13 @@ class Board extends React.Component {
                     {
                         stageName: 'NEW',
                         tasks: [
-                            {
-                                title: '',
-                                desc: '',
-                                startTime: '',
-                                endTime: ''
-                            }
+                            
                         ]
                     },
                     {
                         stageName: 'DONE',
                         tasks: [
-                            {
-                                title: '',
-                                desc: '',
-                                startTime: '',
-                                endTime: ''
-                            }
+                            
                         ]
                     }
 
@@ -83,7 +72,7 @@ class Board extends React.Component {
         console.log(localStorageData.boards.length)
         return (
             <div>
-                <label className="HelloUser"><h2>HELLO {this.props.name}</h2></label>
+                <label className="HelloUser"><h2>hey <b><i>{this.props.name}</i></b></h2></label>
              
                  
                 <button onClick={this.props.onLogout} style={{ backgroundColor: "61dafb", color: "#282c34" }} className="LogoutBtn">LOGOUT
